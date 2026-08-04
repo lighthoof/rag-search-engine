@@ -1,5 +1,6 @@
 import argparse
 import json
+import string
 
 
 def main() -> None:
@@ -16,7 +17,10 @@ def main() -> None:
 
     results = []
     for movie in data["movies"]:
-        if args.query in movie["title"] and len(results) < 5:
+        removal_table = str.maketrans("","",string.punctuation)
+        query = args.query.lower().translate(removal_table)
+        title = movie["title"].lower().translate(removal_table)
+        if query in title and len(results) < 5:
             results.append(movie)
 
     match args.command:
