@@ -19,7 +19,8 @@ def main() -> None:
             results = search_command(args.query, 5)
             for i, result in enumerate(results):
                 print(f"{i+1}. {result["title"]}")
-            
+        case "build":
+            print(f"Building the index")
         case _:
             parser.print_help()
 
