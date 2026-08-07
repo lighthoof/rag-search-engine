@@ -15,12 +15,11 @@ def search_command(query: str, limit: int) -> list[dict]:
     stopwords = load_stopwords()
     results = []
 
-    query_tokens = tokenize(preprocess_text(query))
-
+    query_tokens = tokenize(query)
     for movie in data["movies"]:
-        title_tokens = tokenize(preprocess_text(movie["title"]))
+        title_tokens = tokenize(movie["title"])
         #if [token for token in query_tokens if token in title_tokens]:
-        if has_matching_tokens(query_tokens,title_tokens):
+        if has_matching_tokens(query_tokens, title_tokens):
             results.append(movie)
             if len(results) >= limit:
                 break
@@ -37,6 +36,7 @@ def preprocess_text(text: str) -> str:
     return text
 
 def tokenize(text: str) -> list[str]:
+    text = preprocess_text(text)
     tokens = text.split()
     not_empty_tokens = [token for token in tokens if token]
     clean_tokens = [token for token in not_empty_tokens if token not in STOPWORDS]
