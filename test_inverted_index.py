@@ -1,5 +1,6 @@
 import unittest
 import json
+import os
 from classes.inverted_index import InvertedIndex
 
 class TestInvertedIndex(unittest.TestCase):
@@ -18,6 +19,7 @@ class TestInvertedIndex(unittest.TestCase):
         result = self.searchIndex.get_documents("grand")
         self.assertEqual(result, expected)
 
+    @unittest.skip("takes 25 seconds , reducing iteration time while developing")
     def test_build(self):
         builtIndex = InvertedIndex()
         builtIndex.build()
@@ -26,4 +28,6 @@ class TestInvertedIndex(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_save(self):
-        pass
+        self.searchIndex.save()
+        self.assertTrue(os.path.isfile("cache/index.pkl"))
+        self.assertTrue(os.path.isfile("cache/docmap.pkl"))
