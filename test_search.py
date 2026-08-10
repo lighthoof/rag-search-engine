@@ -1,5 +1,6 @@
 import unittest
-from cli.lib.keyword_search import load_movies, search_command
+from helpers import load_movies
+from cli.lib.keyword_search import search_command
 
 class TestSearch(unittest.TestCase):
     movies = load_movies

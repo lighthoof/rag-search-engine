@@ -1,6 +1,6 @@
 import os
 import pickle
-from cli.lib.keyword_search import tokenize, load_movies
+from helpers import tokenize, load_movies
 
 class InvertedIndex:
     def __add_document(self, doc_id, text):
@@ -27,13 +27,20 @@ class InvertedIndex:
             except PermissionError:
                 print(f"Permission denied: Unable to create cache directory.")
         
-        self.__handle_data_dump()
-
-    def __handle_data_dump(self):
         with open("cache/index.pkl","wb") as index_file:
             pickle.dump(self.index,index_file)
         with open("cache/docmap.pkl","wb") as docmap_file:
             pickle.dump(self.docmap,docmap_file)
+    
+    def load(self):
+        if not (os.path.isfile("cache/index.pkl") and os.path.isfile("cache/docmap.pkl")):
+            raise Exception("index files do not exist")
+        
+        with open("cache/index.pkl","rb") as index_file:
+            self.index = pickle.load(index_file)
+        with open("cache/docmap.pkl","rb") as docmap_file:
+            self.docmap = pickle.load(docmap_file)
+                
 
     def __init__(self):
         self.index = {}

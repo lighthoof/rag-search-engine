@@ -8,6 +8,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Keyword Search CLI")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
+    subparsers.add_parser("build", help="Build movie index")
     search_parser = subparsers.add_parser("search", help="Search movies using keywords")
     search_parser.add_argument("query", type=str, help="Search query")
 
@@ -20,7 +21,7 @@ def main() -> None:
             for i, result in enumerate(results):
                 print(f"{i+1}. {result["title"]}")
         case "build":
-            print(f"Building the index")
+            build_command()
         case _:
             parser.print_help()
 
