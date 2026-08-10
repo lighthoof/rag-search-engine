@@ -5,10 +5,8 @@ build/
 dist/
 wheels/
 *.egg-info
-data/
 cache/
+data/
 
 # Virtual environments
 .venv
-cache/index.pkl
-cache/docmap.pkl
