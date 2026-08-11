@@ -27,12 +27,4 @@ def tokenize(text: str) -> list[str]:
 
     return stemmed_tokens
 
-def has_matching_tokens(query_tokens: list[str], title_tokens: list[str]) -> bool:
-    for qt in query_tokens:
-            for tt in title_tokens:
-                if qt in tt:
-                    return True
-
-    return False
-
 STOPWORDS = load_stopwords()

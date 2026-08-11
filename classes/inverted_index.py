@@ -12,7 +12,8 @@ class InvertedIndex:
                 self.index[token] = [doc_id]
 
     def get_documents(self, term):
-        return sorted(self.index[term])
+        doc_ids = self.index.get(term, [])
+        return sorted(doc_ids)
 
     def build(self):
         data = load_movies()
