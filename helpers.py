@@ -27,4 +27,13 @@ def tokenize(text: str) -> list[str]:
 
     return stemmed_tokens
 
+def tokenize_term(term: str) -> str:
+    token = tokenize(term)
+
+    if len(token) != 1:
+        raise Exception
+
+    return "".join(token)
+
+
 STOPWORDS = load_stopwords()

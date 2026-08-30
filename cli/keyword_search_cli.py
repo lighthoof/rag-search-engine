@@ -1,14 +1,19 @@
 import argparse
 
-from lib.keyword_search import search_command, build_command
+from lib.keyword_search import search_command, build_command, tf_command
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Keyword Search CLI")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     subparsers.add_parser("build", help="Build movie index")
+
     search_parser = subparsers.add_parser("search", help="Search movies using keywords")
     search_parser.add_argument("query", type=str, help="Search query")
+
+    term_frequency_parser = subparsers.add_parser("tf", help="Display term frequency for a term in a document")
+    term_frequency_parser.add_argument("doc_id", type=int, help="Document ID")
+    term_frequency_parser.add_argument("term", type=str, help="A term to display frequency for")
 
     args = parser.parse_args()
     
@@ -20,6 +25,8 @@ def main() -> None:
                 print(f"{movie["id"]}. {movie["title"]}")
         case "build":
             build_command()
+        case "tf":
+            print(tf_command(args.doc_id, args.term))
         case _:
             parser.print_help()
 

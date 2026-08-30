@@ -12,14 +12,28 @@ class InvertedIndex:
     def __add_document(self, doc_id, text):
         tokens = tokenize(text)
         for token in tokens:
+            #adding document IDs to index
             if token in self.index:
                 self.index[token].append(doc_id)
             else:
                 self.index[token] = [doc_id]
 
+            #check and populate doc_id into terms frequency attribute
+            if doc_id not in self.term_frequencies:
+                self.term_frequencies[doc_id] = Counter()
+
+            #incrementing the counter for tokens
+            self.term_frequencies[doc_id][token] += 1
+
     def get_documents(self, term):
         doc_ids = self.index.get(term, [])
         return sorted(doc_ids)
+
+    def get_tf(self, doc_id, term):
+        if term in self.term_frequencies[doc_id]:
+            return self.term_frequencies[doc_id][term]
+        else:
+            return 0
 
     def build(self):
         data = load_movies()

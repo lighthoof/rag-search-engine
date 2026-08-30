@@ -5,7 +5,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from helpers import tokenize
+from helpers import tokenize, tokenize_term
 from classes.inverted_index import InvertedIndex
 
 
@@ -32,4 +32,16 @@ def build_command():
     iIndex = InvertedIndex()
     iIndex.build()
     iIndex.save()
+
+def tf_command(doc_id: int, term: str) -> int:
+    searchIndex = InvertedIndex()
+    token = tokenize_term(term)
+
+    try:
+        searchIndex.load()
+    except Exception:
+        print("Index files do not exist, please build an index first")
+    
+    return searchIndex.get_tf(doc_id, token)
+
 
