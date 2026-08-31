@@ -36,4 +36,5 @@ def tokenize_term(term: str) -> str:
     return "".join(token)
 
 
+
 STOPWORDS = load_stopwords()

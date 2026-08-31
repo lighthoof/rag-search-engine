@@ -1,5 +1,6 @@
 import os
 import pickle
+import math
 from collections import Counter
 from helpers import tokenize, load_movies
 
@@ -11,22 +12,22 @@ class InvertedIndex:
 
     def __add_document(self, doc_id, text):
         tokens = tokenize(text)
-        for token in tokens:
+        for token in set(tokens):
             #adding document IDs to index
             if token in self.index:
                 self.index[token].append(doc_id)
             else:
                 self.index[token] = [doc_id]
 
-            #check and populate doc_id into terms frequency attribute
-            if doc_id not in self.term_frequencies:
-                self.term_frequencies[doc_id] = Counter()
+        #check and populate doc_id into terms frequency attribute
+        if doc_id not in self.term_frequencies:
+            self.term_frequencies[doc_id] = Counter()
 
-            #incrementing the counter for tokens
-            self.term_frequencies[doc_id][token] += 1
+        #incrementing the counter for tokens
+        self.term_frequencies[doc_id].update(tokens)
 
     def get_documents(self, term):
-        doc_ids = self.index.get(term, [])
+        doc_ids = self.index.get(term, set())
         return sorted(doc_ids)
 
     def get_tf(self, doc_id, term):
@@ -34,6 +35,11 @@ class InvertedIndex:
             return self.term_frequencies[doc_id][term]
         else:
             return 0
+
+    def get_idf(self, token):
+        doc_count = len(self.docmap)
+        hit_count = len(self.get_documents(token))
+        return math.log((doc_count + 1) / (hit_count + 1))
 
     def build(self):
         data = load_movies()

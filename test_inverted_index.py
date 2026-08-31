@@ -2,6 +2,7 @@ import unittest
 import json
 import os
 import sys
+from helpers import tokenize_term
 from classes.inverted_index import InvertedIndex
 
 class TestInvertedIndex(unittest.TestCase):
@@ -12,8 +13,8 @@ class TestInvertedIndex(unittest.TestCase):
 
     def test_add_document(self):
         self.docTestIndex._InvertedIndex__add_document(0,"The Grand Army of the Republic")
-        expected = '{"grand": [0], "armi": [0], "republ": [0]}'
-        result = json.dumps(self.docTestIndex.index)
+        expected = {"grand": [0], "armi": [0], "republ": [0]}
+        result = json.loads(json.dumps(self.docTestIndex.index))
         self.assertEqual(result, expected)
 
     def test_get_documents(self):
@@ -31,6 +32,17 @@ class TestInvertedIndex(unittest.TestCase):
         self.assertEqual(result1, expected1)
         self.assertEqual(result2, expected2)
 
+    def test_get_idf(self):
+        expected1 = 5.52
+        result1 = round(self.fullTestIndex.get_idf(tokenize_term("grizzly")), 2)
+        expected2 = 3.29
+        result2 = round(self.fullTestIndex.get_idf(tokenize_term("actor")), 2)
+        expected3 = 0.76
+        result3 = round(self.fullTestIndex.get_idf(tokenize_term("man")), 2)
+
+        self.assertEqual(result1, expected1)
+        self.assertEqual(result2, expected2)
+        self.assertEqual(result3, expected3)
 
     #@unittest.skip("takes 25 seconds , reducing iteration time while developing")
     def test_build(self):
