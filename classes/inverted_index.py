@@ -41,6 +41,12 @@ class InvertedIndex:
         hit_count = len(self.get_documents(token))
         return math.log((doc_count + 1) / (hit_count + 1))
 
+    def get_tfidf(self, doc_id, term):
+        tf = self.get_tf(doc_id, term)
+        idf = self.get_idf(term)
+
+        return tf * idf
+
     def build(self):
         data = load_movies()
         for movie in data["movies"]:
@@ -64,7 +70,7 @@ class InvertedIndex:
     
     def load(self):
         if not (os.path.isfile("cache/index.pkl") and os.path.isfile("cache/docmap.pkl")):
-            raise Exception("index files do not exist")
+            raise Exception("Index files do not exist, please build an index first")
         
         with open("cache/index.pkl","rb") as index_file:
             self.index = pickle.load(index_file)

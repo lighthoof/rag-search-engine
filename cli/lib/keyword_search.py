@@ -35,24 +35,19 @@ def build_command():
 
 def tf_command(doc_id: int, term: str) -> int:
     searchIndex = InvertedIndex()
-    token = tokenize_term(term)
-
-    try:
-        searchIndex.load()
-    except Exception:
-        print("Index files do not exist, please build an index first")
+    searchIndex.load()
     
-    return searchIndex.get_tf(doc_id, token)
+    return searchIndex.get_tf(doc_id, tokenize_term(term))
 
 def idf_command(term: str) -> float:
     searchIndex = InvertedIndex()
-    token = tokenize_term(term)
+    searchIndex.load()
 
-    try:
-        searchIndex.load()
-    except Exception:
-        print("Index files do not exist, please build an index first")
+    return searchIndex.get_idf(tokenize_term(term))
 
-    return searchIndex.get_idf(token)
+def tfidf_command(doc_id: int, term: str) -> float:
+    searchIndex = InvertedIndex()
+    searchIndex.load()
     
+    return searchIndex.get_tfidf(doc_id, tokenize_term(term))
     

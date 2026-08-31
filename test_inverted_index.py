@@ -6,10 +6,11 @@ from helpers import tokenize_term
 from classes.inverted_index import InvertedIndex
 
 class TestInvertedIndex(unittest.TestCase):
-    #movies = load_movies()
     docTestIndex = InvertedIndex()
     fullTestIndex = InvertedIndex()
-    fullTestIndex.build()
+    #loading instead of building to reduce iteration time
+    fullTestIndex.load()
+    #fullTestIndex.build()
 
     def test_add_document(self):
         self.docTestIndex._InvertedIndex__add_document(0,"The Grand Army of the Republic")
@@ -43,6 +44,15 @@ class TestInvertedIndex(unittest.TestCase):
         self.assertEqual(result1, expected1)
         self.assertEqual(result2, expected2)
         self.assertEqual(result3, expected3)
+    
+    def test_get_tf(self):
+        expected1 = 24.13
+        result1 = round(self.fullTestIndex.get_tfidf(424, "trapper"), 2)
+        expected2 = 2.14
+        result2 = round(self.fullTestIndex.get_tfidf(424, "push"), 2)
+
+        self.assertEqual(result1, expected1)
+        self.assertEqual(result2, expected2)
 
     #@unittest.skip("takes 25 seconds , reducing iteration time while developing")
     def test_build(self):
