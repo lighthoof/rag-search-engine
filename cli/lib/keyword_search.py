@@ -50,4 +50,9 @@ def tfidf_command(doc_id: int, term: str) -> float:
     searchIndex.load()
     
     return searchIndex.get_tfidf(doc_id, tokenize_term(term))
-    
+
+def bm25_idf_command(term: str) -> float:
+    searchIndex = InvertedIndex()
+    searchIndex.load()
+
+    return searchIndex.get_bm25_idf(tokenize_term(term))

@@ -47,6 +47,12 @@ class InvertedIndex:
 
         return tf * idf
 
+    def get_bm25_idf(self, token: str) -> float:
+        doc_count = len(self.docmap)
+        hit_count = len(self.get_documents(token))
+
+        return math.log((doc_count - hit_count + 0.5) / (hit_count + 0.5) + 1)
+
     def build(self):
         data = load_movies()
         for movie in data["movies"]:

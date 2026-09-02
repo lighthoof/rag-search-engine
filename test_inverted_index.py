@@ -45,7 +45,7 @@ class TestInvertedIndex(unittest.TestCase):
         self.assertEqual(result2, expected2)
         self.assertEqual(result3, expected3)
     
-    def test_get_tf(self):
+    def test_get_tfidf(self):
         expected1 = 24.13
         result1 = round(self.fullTestIndex.get_tfidf(424, "trapper"), 2)
         expected2 = 2.14
@@ -53,6 +53,18 @@ class TestInvertedIndex(unittest.TestCase):
 
         self.assertEqual(result1, expected1)
         self.assertEqual(result2, expected2)
+
+    def test_get_bm25_idf(self):
+        expected1 = 5.55
+        result1 = round(self.fullTestIndex.get_bm25_idf(tokenize_term("grizzly")), 2)
+        expected2 = 3.29
+        result2 = round(self.fullTestIndex.get_bm25_idf(tokenize_term("actor")), 2)
+        expected3 = 0.95
+        result3 = round(self.fullTestIndex.get_bm25_idf(tokenize_term("love")), 2)
+
+        self.assertEqual(result1, expected1)
+        self.assertEqual(result2, expected2)
+        self.assertEqual(result3, expected3)
 
     #@unittest.skip("takes 25 seconds , reducing iteration time while developing")
     def test_build(self):
