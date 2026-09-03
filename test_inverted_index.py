@@ -66,6 +66,18 @@ class TestInvertedIndex(unittest.TestCase):
         self.assertEqual(result2, expected2)
         self.assertEqual(result3, expected3)
 
+    def test_get_bm25tf(self):
+        expected1 = 2.31
+        result1 = round(self.fullTestIndex.get_bm25_tf(1, tokenize_term("anbuselvan")), 2)
+        expected2 = 2.17
+        result2 = round(self.fullTestIndex.get_bm25_tf(1, tokenize_term("maya")), 2)
+        expected3 = 2.00
+        result3 = round(self.fullTestIndex.get_bm25_tf(1, tokenize_term("police")), 2)
+
+        self.assertEqual(result1, expected1)
+        self.assertEqual(result2, expected2)
+        self.assertEqual(result3, expected3)
+
     #@unittest.skip("takes 25 seconds , reducing iteration time while developing")
     def test_build(self):
         expected = 4651

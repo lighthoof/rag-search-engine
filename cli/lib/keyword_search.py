@@ -5,7 +5,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from helpers import tokenize, tokenize_term
+from helpers import tokenize, tokenize_term, BM25_K1
 from classes.inverted_index import InvertedIndex
 
 
@@ -56,3 +56,9 @@ def bm25_idf_command(term: str) -> float:
     searchIndex.load()
 
     return searchIndex.get_bm25_idf(tokenize_term(term))
+
+def bm25_tf_command(doc_id: int, term: str, k1=BM25_K1) -> float:
+    searchIndex = InvertedIndex()
+    searchIndex.load()
+
+    return searchIndex.get_bm25_tf(doc_id, tokenize_term(term), k1)

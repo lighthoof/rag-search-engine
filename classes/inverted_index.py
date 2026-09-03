@@ -2,7 +2,7 @@ import os
 import pickle
 import math
 from collections import Counter
-from helpers import tokenize, load_movies
+from helpers import tokenize, load_movies, BM25_K1
 
 class InvertedIndex:
     def __init__(self):
@@ -13,7 +13,7 @@ class InvertedIndex:
     def __add_document(self, doc_id, text):
         tokens = tokenize(text)
         for token in set(tokens):
-            #adding document IDs to index
+            #adding document IDs to indexgjn
             if token in self.index:
                 self.index[token].append(doc_id)
             else:
@@ -52,6 +52,10 @@ class InvertedIndex:
         hit_count = len(self.get_documents(token))
 
         return math.log((doc_count - hit_count + 0.5) / (hit_count + 0.5) + 1)
+    
+    def get_bm25_tf(self, doc_id, term, k1=BM25_K1):
+        tf = self.get_tf(doc_id, term)
+        return (tf * (k1 + 1) / (tf + k1))
 
     def build(self):
         data = load_movies()

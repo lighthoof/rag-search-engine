@@ -38,3 +38,4 @@ def tokenize_term(term: str) -> str:
 
 
 STOPWORDS = load_stopwords()
+BM25_K1 = 1.5
