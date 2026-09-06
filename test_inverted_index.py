@@ -67,11 +67,11 @@ class TestInvertedIndex(unittest.TestCase):
         self.assertEqual(result3, expected3)
 
     def test_get_bm25tf(self):
-        expected1 = 2.31
+        expected1 = 2.35
         result1 = round(self.fullTestIndex.get_bm25_tf(1, tokenize_term("anbuselvan")), 2)
-        expected2 = 2.17
+        expected2 = 2.24
         result2 = round(self.fullTestIndex.get_bm25_tf(1, tokenize_term("maya")), 2)
-        expected3 = 2.00
+        expected3 = 2.09
         result3 = round(self.fullTestIndex.get_bm25_tf(1, tokenize_term("police")), 2)
 
         self.assertEqual(result1, expected1)

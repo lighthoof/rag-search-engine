@@ -39,3 +39,7 @@ def tokenize_term(term: str) -> str:
 
 STOPWORDS = load_stopwords()
 BM25_K1 = 1.5
+BM25_B = 0.75
+SEARCH_LIMIT = 5
+
+CACHE_DIR = "cache"
