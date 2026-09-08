@@ -2,8 +2,8 @@ import unittest
 import json
 import os
 import sys
-from helpers import tokenize_term
-from classes.inverted_index import InvertedIndex
+from cli.lib.helpers import tokenize_term
+from cli.lib.inverted_index import InvertedIndex
 
 class TestInvertedIndex(unittest.TestCase):
     docTestIndex = InvertedIndex()

@@ -2,7 +2,7 @@ import os
 import pickle
 import math
 from collections import Counter
-from helpers import tokenize, load_movies, BM25_K1, BM25_B, CACHE_DIR
+from cli.lib.helpers import tokenize, load_movies, BM25_K1, BM25_B, CACHE_DIR
 
 class InvertedIndex:
     def __init__(self):
